@@ -18,6 +18,14 @@ int main(int argc, char *argv[])
     SDL_Event event;
     bool running = true;
     Window window(title, windowWidth, windowHeight);
+    SDL_Texture *lizard = nullptr;
+    lizard = window.loadTexture("res/entity/lizard/move1.png");
+    SDL_Texture *lizard2 = nullptr;
+    lizard2 = window.loadTexture("res/entity/lizard/move2.png");
+    if (lizard == nullptr)
+    {
+        std::cout << "Can't load texture \nERROR : " << SDL_GetError() << "\n";
+    }
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -41,6 +49,13 @@ int main(int argc, char *argv[])
                     break;
                 }
             }
+            window.clear();
+            window.render(lizard);
+            window.display();
+            window.clear();
+            window.render(lizard2);
+
+            window.display();
         }
     }
     return 0;

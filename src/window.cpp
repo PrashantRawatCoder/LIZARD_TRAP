@@ -30,5 +30,17 @@ void Window::display()
 
 void Window::clear()
 {
+    SDL_SetRenderDrawColor(renderer, 255, 255, 25, 255);
     SDL_RenderClear(renderer);
+}
+
+void Window::render(SDL_Texture *texture)
+{
+    SDL_Rect r{0, 0, 120, 96};
+    SDL_RenderCopy(renderer, texture, NULL, &r);
+}
+
+SDL_Texture *Window::loadTexture(char *filename)
+{
+    return IMG_LoadTexture(renderer, filename);
 }
