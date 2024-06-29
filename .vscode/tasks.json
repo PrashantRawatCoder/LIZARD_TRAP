@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "debug game",
+            "type": "shell",
+            "command": "export XDG_RUNTIME_DIR=${TMPDIR} && export DISPLAY=:0 && /usr/bin/g++ -c src/*.cpp -g -Wall -I include && g++ *.o -o bin/debug/main -lSDL2main -lSDL2 -lSDL2_image && ./bin/debug/main",
+            "args": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Generated task by Debugger."
+        },
+        {
+            "label": "Release game",
+            "type": "shell",
+            "command": "export XDG_RUNTIME_DIR=${TMPDIR} && export DISPLAY=:0 && /usr/bin/g++ -c src/*.cpp -O3 -Wall -I include && g++ *.o -o bin/release/main -s -lSDL2main -lSDL2 -lSDL2_image && ./bin/release/main",
+            "args": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Generated task by Debugger."
+        }
+    ]
+}
