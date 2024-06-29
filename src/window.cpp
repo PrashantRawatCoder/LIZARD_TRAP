@@ -30,14 +30,19 @@ void Window::display()
 
 void Window::clear()
 {
-    SDL_SetRenderDrawColor(renderer, 255, 255, 25, 255);
+    SDL_SetRenderDrawColor(renderer, 25, 255, 255, 255);
     SDL_RenderClear(renderer);
 }
 
-void Window::render(SDL_Texture *texture)
+void Window::render(SDL_Texture *texture, SDL_Rect dstrect)
 {
-    SDL_Rect r{0, 0, 120, 96};
-    SDL_RenderCopy(renderer, texture, NULL, &r);
+    SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+}
+
+void Window::renderEntity(Entity *theEntity)
+{
+    SDL_Rect dstrect{(*theEntity).x(), (*theEntity).y(), (*theEntity).getWidth(), (*theEntity).getHeight()};
+    render((*theEntity).getTexture(), dstrect);
 }
 
 SDL_Texture *Window::loadTexture(char *filename)
