@@ -17,17 +17,17 @@ void Player::Events(SDL_Event event)
     {
         switch (event.key.keysym.sym)
         {
-        case SDLK_w:
-            velX = 10;
-            break;
-        case SDLK_s:
-            velX = -10;
+        case SDLK_d:
+            setVel(10, velY());
             break;
         case SDLK_a:
-            velY = -10;
+            setVel(-10, velY());
             break;
-        case SDLK_d:
-            velY = 10;
+        case SDLK_s:
+            setVel(velX(), 10);
+            break;
+        case SDLK_w:
+            setVel(velX(), -10);
             break;
         default:
             break;
@@ -37,17 +37,17 @@ void Player::Events(SDL_Event event)
     {
         switch (event.key.keysym.sym)
         {
-        case SDLK_w:
-            velX = 0;
-            break;
-        case SDLK_s:
-            velX = 0;
-            break;
         case SDLK_a:
-            velY = 0;
+            setVel(0, velY());
             break;
         case SDLK_d:
-            velY = 0;
+            setVel(0, velY());
+            break;
+        case SDLK_w:
+            setVel(velX(), 0);
+            break;
+        case SDLK_s:
+            setVel(velX(), 0);
             break;
         default:
             break;
@@ -57,6 +57,6 @@ void Player::Events(SDL_Event event)
 
 SDL_Texture *Player::getPTexture()
 {
-    move(x() + velX, y() + velY);
+    move();
     return getTexture();
 }

@@ -18,6 +18,22 @@ int Entity::y()
     return posY;
 }
 
+int Entity::velX()
+{
+    return velocityX;
+}
+
+int Entity::velY()
+{
+    return velocityY;
+}
+
+void Entity::setVel(int velx, int vely)
+{
+    velocityX = velx;
+    velocityY = vely;
+}
+
 int Entity::getWidth()
 {
     return width;
@@ -57,9 +73,9 @@ SDL_Texture *Entity::getTexture()
         }
         return texture.damage;
     }
-
-    currentMoveTexture = (currentMoveTexture + 1) % 4;
-    return texture.move[((currentMoveTexture % 2) + ((currentMoveTexture + 1) % 2)) % 2];
+    if ((velocityX || velocityY))
+        currentMoveTexture = (currentMoveTexture + 1) % 4;
+    return texture.move[((currentMoveTexture < 2) ? 0 : 1)];
 }
 
 void Entity::setTexture(entityTextures Texture)
@@ -67,10 +83,10 @@ void Entity::setTexture(entityTextures Texture)
     texture = Texture;
 }
 
-void Entity::move(int x, int y)
+void Entity::move()
 {
-    posX = x;
-    posY = y;
+    posX += velocityX;
+    posY += velocityY;
 }
 int Entity::getDamage(int attack)
 {

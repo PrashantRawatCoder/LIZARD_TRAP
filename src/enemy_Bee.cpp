@@ -15,8 +15,7 @@ Enemy_Bee::Enemy_Bee(int posx, int posy, int width, int height, int maxHealth, i
 
 SDL_Texture *Enemy_Bee::getPTexture()
 {
-    velX = rand() % 3 - 1;
-    velY = rand() % 3 - 1;
-    move(x() + velX, y() + velY);
+    setVel(rand() % 13 - 6, rand() % 13 - 6);
+    move();
     return getTexture();
 }
