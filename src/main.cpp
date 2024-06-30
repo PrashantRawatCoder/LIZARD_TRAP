@@ -48,8 +48,17 @@ int main(int argc, char *argv[])
             }
             if (event.type == SDL_MOUSEMOTION)
             {
-                angle = 180 * std::atan2((event.motion.y - player.y()) / sqrt(player.x() * player.x() + player.y() * player.y()), ((event.motion.x - player.x()) / sqrt(sqrt(player.x() * player.x() + player.y() * player.y())))) /
-                        M_PI;
+                {
+float dx = event.motion.x - player.x();
+float dy = event.motion.y - player.y();
+float angle_rad = std::atan2(dy, dx);
+angle= angle_rad * 180.0f / M_PI;
+angle -= 0.0000001f;  // Adjust for SDL's coordinate system where 0 degrees is up (negative y-axis)
+if (angle < 0) {
+    angle += 360.0f;  // Ensure angle is within [0, 360)
+}
+                 }
+                //angle = 180 * std::atan2((event.motion.y - player.y()) / sqrt(player.x() * player.x() + player.y() * player.y()), ((event.motion.x - player.x()) / sqrt(sqrt(player.x() * player.x() + player.y() * player.y())))) / M_PI;
                 std::cout << "Angle : " << angle << "\n";
             }
             player.Events(event);
