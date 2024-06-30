@@ -39,11 +39,11 @@ void Window::render(SDL_Texture *texture, SDL_Rect dstrect)
     SDL_RenderCopy(renderer, texture, NULL, &dstrect);
 }
 
-void Window::renderEntity(Entity *theEntity)
-{
-    SDL_Rect dstrect{(*theEntity).x(), (*theEntity).y(), (*theEntity).getWidth(), (*theEntity).getHeight()};
-    render((*theEntity).getTexture(), dstrect);
-}
+// void Window::renderEntity(Entity *theEntity)
+// {
+//     SDL_Rect dstrect{(*theEntity).x(), (*theEntity).y(), (*theEntity).getWidth(), (*theEntity).getHeight()};
+//     render((*theEntity).getTexture(), dstrect);
+// }
 
 SDL_Texture *Window::loadTexture(char *filename)
 {

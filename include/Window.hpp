@@ -13,6 +13,6 @@ public:
     void clear();
     void display();
     void render(SDL_Texture *texture, SDL_Rect dstrect);
-    void renderEntity(Entity *theEntity);
+    //void renderEntity(Entity *theEntity);
     SDL_Texture *loadTexture(char *filename);
 };

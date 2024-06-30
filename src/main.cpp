@@ -4,6 +4,7 @@
 #include <vector>
 #include "Window.hpp"
 #include "Entity.hpp"
+#include "Player.hpp"
 #include "parameters.hpp"
 
 void init()
@@ -21,16 +22,17 @@ int main(int argc, char *argv[])
     bool running = true;
     Window window(title, windowWidth, windowHeight);
 
-    std::vector<Entity> entities;
+    std::vector<Player> entities;
     {
-        entityTextures Texture;
-        Texture.move[0] = window.loadTexture("res/entity/lizard/move1.png");
-        Texture.move[1] = window.loadTexture("res/entity/lizard/move2.png");
-        Texture.attack = window.loadTexture("res/entity/lizard/attack.png");
-        Texture.damage = window.loadTexture("res/entity/lizard/move1.png");
-        entities.push_back(Entity(100, 100, 120, 96, 10, 2, Texture));
+        // entityTextures Texture;
+        // Texture.move[0] = window.loadTexture("res/entity/lizard/move1.png");
+        // Texture.move[1] = window.loadTexture("res/entity/lizard/move2.png");
+        // Texture.attack = window.loadTexture("res/entity/lizard/attack.png");
+        // Texture.damage = window.loadTexture("res/entity/lizard/move1.png");
+        // entities.push_back(Entity(100, 100, 120, 96, 10, 2, Texture));
+
+        entities.push_back(Player(100, 100, 120, 96, 10, 2, &window));
     }
-    int i = 1;
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -40,26 +42,17 @@ int main(int argc, char *argv[])
                 SDL_Quit();
                 exit(0);
             }
-            if (event.type == SDL_KEYDOWN)
+            if ((event.type == SDL_KEYDOWN) && (event.key.keysym.sym == SDLK_ESCAPE))
             {
-                switch (event.key.keysym.sym)
-                {
-                case SDLK_ESCAPE:
-                    SDL_Quit();
-                    exit(0);
-                case SDLK_w:
-                    std::cout << "W key pressed \n";
-                    i += 38;
-                    break;
-                default:
-                    break;
-                }
+
+                SDL_Quit();
+                exit(0);
             }
-            window.clear();
-            window.renderEntity(&entities[0]);
-            entities[0].move(i, 379);
-            window.display();
+            entities[0].Events(event);
         }
+        window.clear();
+        window.render(entities[0].getPTexture(),entities[0].getRect());
+        window.display();
     }
     return 0;
 }
