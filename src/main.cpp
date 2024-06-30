@@ -9,6 +9,7 @@
 #include "Entity.hpp"
 #include "Player.hpp"
 #include "Enemy_Bee.hpp"
+#include "Enemy_Ant.hpp"
 #include "parameters.hpp"
 
 void init()
@@ -38,6 +39,8 @@ int main(int argc, char *argv[])
         entities.push_back(Player(100, 100, 120, 96, 10, 2, &window));
     }
     Enemy_Bee bee(200, 200, 64, 64, 10, 2, &window);
+    Enemy_Ant ant1(400, 200, 64, 64, 10, 2, &window);
+    Enemy_Ant ant2(400, 400, 64, 64, 10, 2, &window);
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -58,6 +61,8 @@ int main(int argc, char *argv[])
         window.clear();
         window.render(entities[0].getPTexture(), entities[0].getRect());
         window.render(bee.getPTexture(), bee.getRect());
+        window.render(ant1.getPTexture(), ant1.getRect());
+        window.render(ant2.getPTexture(), ant2.getRect());
         window.display();
     }
     return 0;
