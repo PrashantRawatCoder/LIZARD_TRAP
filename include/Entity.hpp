@@ -15,6 +15,8 @@ class Entity
 private:
     int posX, posY;
     int width, height;
+    int velocityX = 0, velocityY = 0;
+    double rotationAngle = 0;
     int maxHealth;
     int health;
     int attackDamage;
@@ -24,9 +26,6 @@ private:
     bool attacking = false;
     int currentMoveTexture = 0;
 
-    int velocityX = 0;
-    int velocityY = 0;
-
 public:
     Entity(int posX, int posY, int width, int height, int maxHealth, int attackDamage);
     Entity(int posX, int posY, int width, int height, int maxHealth, int attackDamage, entityTextures Texture);
@@ -34,14 +33,16 @@ public:
     int y();
     int velX();
     int velY();
+    double angle();
     int getWidth();
     int getHeight();
     int attack();
     SDL_Texture *getTexture();
 
     void setVel(int velx, int vely);
-    void setTexture(entityTextures Texture);
+    void setAngle(double angle);
     void move();
+    void setTexture(entityTextures Texture);
     int getDamage(int attack);
     void heal(int addHealth);
     SDL_Rect getRect();

@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <time.h>
+#include <cmath>
 
 #include "Window.hpp"
 #include "Entity.hpp"
@@ -25,22 +26,11 @@ int main(int argc, char *argv[])
 {
     SDL_Event event;
     bool running = true;
+    double angle = NULL;
+
     Window window(title, windowWidth, windowHeight);
 
-    std::vector<Player> entities;
-    {
-        // entityTextures Texture;
-        // Texture.move[0] = window.loadTexture("res/entity/lizard/move1.png");
-        // Texture.move[1] = window.loadTexture("res/entity/lizard/move2.png");
-        // Texture.attack = window.loadTexture("res/entity/lizard/attack.png");
-        // Texture.damage = window.loadTexture("res/entity/lizard/move1.png");
-        // entities.push_back(Entity(100, 100, 120, 96, 10, 2, Texture));
-
-        entities.push_back(Player(100, 100, 120, 96, 10, 2, &window));
-    }
-    Enemy_Bee bee(200, 200, 64, 64, 10, 2, &window);
-    Enemy_Ant ant1(400, 200, 64, 64, 10, 2, &window);
-    Enemy_Ant ant2(400, 400, 64, 64, 10, 2, &window);
+    Player player = Player(100, 100, 120, 96, 10, 2, &window);
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -56,13 +46,16 @@ int main(int argc, char *argv[])
                 SDL_Quit();
                 exit(0);
             }
-            entities[0].Events(event);
+            if (event.type == SDL_MOUSEMOTION)
+            {
+                angle = 180 * std::atan2((event.motion.y - player.y()) / sqrt(player.x() * player.x() + player.y() * player.y()), ((event.motion.x - player.x()) / sqrt(sqrt(player.x() * player.x() + player.y() * player.y())))) /
+                        M_PI;
+                std::cout << "Angle : " << angle << "\n";
+            }
+            player.Events(event);
         }
         window.clear();
-        window.render(entities[0].getPTexture(), entities[0].getRect());
-        window.render(bee.getPTexture(), bee.getRect());
-        window.render(ant1.getPTexture(), ant1.getRect());
-        window.render(ant2.getPTexture(), ant2.getRect());
+        window.render(player.getPTexture(), player.getRect(), angle);
         window.display();
     }
     return 0;

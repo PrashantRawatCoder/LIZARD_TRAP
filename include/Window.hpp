@@ -12,6 +12,6 @@ public:
     ~Window();
     void clear();
     void display();
-    void render(SDL_Texture *texture, SDL_Rect dstrect);
+    void render(SDL_Texture *texture, SDL_Rect dstrect,double angle);
     SDL_Texture *loadTexture(char *filename);
 };

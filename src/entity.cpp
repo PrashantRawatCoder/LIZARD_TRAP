@@ -13,6 +13,7 @@ int Entity::x()
     return posX;
 }
 
+
 int Entity::y()
 {
     return posY;
@@ -32,6 +33,14 @@ void Entity::setVel(int velx, int vely)
 {
     velocityX = velx;
     velocityY = vely;
+}
+
+double Entity::angle(){
+    return rotationAngle;
+}
+
+void Entity::setAngle(double angle){
+    rotationAngle=angle;
 }
 
 int Entity::getWidth()

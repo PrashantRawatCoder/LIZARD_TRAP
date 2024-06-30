@@ -34,9 +34,9 @@ void Window::clear()
     SDL_RenderClear(renderer);
 }
 
-void Window::render(SDL_Texture *texture, SDL_Rect dstrect)
+void Window::render(SDL_Texture *texture, SDL_Rect dstrect, double angle)
 {
-    SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+    SDL_RenderCopyEx(renderer, texture, NULL, &dstrect, angle, NULL, SDL_FLIP_NONE);
 }
 
 SDL_Texture *Window::loadTexture(char *filename)
