@@ -2,14 +2,18 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <time.h>
+
 #include "Window.hpp"
 #include "Entity.hpp"
 #include "Player.hpp"
+#include "Enemy_Bee.hpp"
 #include "parameters.hpp"
 
 void init()
 {
-
+    std::srand(time(0));
     if (SDL_Init(SDL_INIT_VIDEO) > 0)
         std::cout << "SDL Video Initilisation Failed !!\nERROR : " << SDL_GetError() << "\n";
     if (!IMG_Init(IMG_INIT_PNG))
@@ -33,6 +37,7 @@ int main(int argc, char *argv[])
 
         entities.push_back(Player(100, 100, 120, 96, 10, 2, &window));
     }
+    Enemy_Bee bee(200, 200, 64, 64, 10, 2, &window);
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -51,7 +56,8 @@ int main(int argc, char *argv[])
             entities[0].Events(event);
         }
         window.clear();
-        window.render(entities[0].getPTexture(),entities[0].getRect());
+        window.render(entities[0].getPTexture(), entities[0].getRect());
+        window.render(bee.getPTexture(), bee.getRect());
         window.display();
     }
     return 0;
