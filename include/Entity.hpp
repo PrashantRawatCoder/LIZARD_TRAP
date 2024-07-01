@@ -16,6 +16,7 @@ private:
     int posX, posY;
     int width, height;
     int velocityX = 0, velocityY = 0;
+    int MouseX=0,MouseY=0;
     double rotationAngle = 0;
     int maxHealth;
     int health;

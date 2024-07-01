@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "Window.hpp"
+#include <cmath>
 
 Player::Player(int posx, int posy, int width, int height, int maxHealth, int attackDamage, Window *window) : Entity(posx, posy, width, height, maxHealth, attackDamage)
 {
@@ -13,50 +14,51 @@ Player::Player(int posx, int posy, int width, int height, int maxHealth, int att
 
 void Player::Events(SDL_Event event)
 {
-    if (event.type == SDL_KEYDOWN)
+    if (event.type == SDL_MOUSEBUTTONDOWN)
     {
-        switch (event.key.keysym.sym)
+        if (event.button.button == SDL_BUTTON_LEFT)
         {
-        case SDLK_d:
-            setVel(10, velY());
-            break;
-        case SDLK_a:
-            setVel(-10, velY());
-            break;
-        case SDLK_s:
-            setVel(velX(), 10);
-            break;
-        case SDLK_w:
-            setVel(velX(), -10);
-            break;
-        default:
-            break;
+            moving = true;
         }
     }
-    if (event.type == SDL_KEYUP)
+    if (event.type == SDL_MOUSEBUTTONUP)
     {
-        switch (event.key.keysym.sym)
+        if (event.button.button == SDL_BUTTON_LEFT)
         {
-        case SDLK_a:
-            setVel(0, velY());
-            break;
-        case SDLK_d:
-            setVel(0, velY());
-            break;
-        case SDLK_w:
-            setVel(velX(), 0);
-            break;
-        case SDLK_s:
-            setVel(velX(), 0);
-            break;
-        default:
-            break;
+            setVel(0, 0);
+            moving = false;
         }
+    }
+    // making player look at mouse
+    if (event.type == SDL_MOUSEMOTION)
+    {
+        mouseX = event.motion.x;
+        mouseY = event.motion.y;
     }
 }
 
 SDL_Texture *Player::getPTexture()
 {
+    {
+        float dx = mouseX - x();
+        float dy = mouseY - y();
+        float angle_rad = std::atan2(dy, dx);
+        double angle = angle_rad * 180.0f / M_PI;
+        angle -= 5.0000001f;
+        if (angle < 0)
+        {
+            angle += 360.0f;
+        }
+        setAngle(angle);
+    }
+    if (moving && (sqrt((mouseX - x()) * (mouseX - x()) + (mouseX - x()) * (mouseX - x())) > 3))
+    {
+        setVel(std::cos(angle() * M_PI / 180.0) * (7), std::sin(angle() * M_PI / 180.0) * (7));
+    }
+    else
+    {
+        setVel(0, 0);
+    }
     move();
     return getTexture();
 }

@@ -10,13 +10,12 @@ Entity::Entity(int posx, int posy, int width, int height, int maxHealth, int att
 
 int Entity::x()
 {
-    return posX;
+    return posX + width / 2;
 }
-
 
 int Entity::y()
 {
-    return posY;
+    return posY + height / 2;
 }
 
 int Entity::velX()
@@ -35,12 +34,14 @@ void Entity::setVel(int velx, int vely)
     velocityY = vely;
 }
 
-double Entity::angle(){
+double Entity::angle()
+{
     return rotationAngle;
 }
 
-void Entity::setAngle(double angle){
-    rotationAngle=angle;
+void Entity::setAngle(double angle)
+{
+    rotationAngle = angle;
 }
 
 int Entity::getWidth()
@@ -115,6 +116,6 @@ void Entity::heal(int addHealth)
 
 SDL_Rect Entity::getRect()
 {
-    SDL_Rect rect{x(), y(), getWidth(), getHeight()};
+    SDL_Rect rect{posX, posY, width, height};
     return rect;
 }
