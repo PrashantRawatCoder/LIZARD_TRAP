@@ -7,6 +7,7 @@
 #include <cmath>
 
 #include "Window.hpp"
+#include "Map.hpp"
 #include "Entity.hpp"
 #include "Player.hpp"
 #include "Enemy_Bee.hpp"
@@ -24,18 +25,19 @@ void init()
 
 int main(int argc, char *argv[])
 {
-    SDL_Event event;
     bool running = true;
-    double angle = NULL;
     Uint32 frameStart = 0;
-    Window window(title, windowWidth, windowHeight);
 
-    Player player = Player(100, 100, 120, 96, 10, 2, &window);
+    SDL_Event event;
+    Window window((char *)title, windowWidth, windowHeight);
+    Map myMap(&window,(char *) "res/map/");
+    Player player = Player(100, 100, 120, 60, 10, 2, &window);
+    std::cout<<"Game Started !!\n";
     while (running)
     {
-        frameStart = SDL_GetTicks();
         while (SDL_PollEvent(&event))
         {
+            frameStart = SDL_GetTicks();
             if (event.type == SDL_QUIT)
             {
                 SDL_Quit();
@@ -50,12 +52,13 @@ int main(int argc, char *argv[])
             player.Events(event);
         }
         window.clear();
+        myMap.renderMap(0, 0);
         window.render(player.getPTexture(), player.getRect(), player.angle());
         window.display();
 
         // Adjusting constant FPS
         frameStart = SDL_GetTicks() - frameStart;
-        if (frameStart < frameDelay)
+        if (frameStart < (unsigned)frameDelay)
         {
             SDL_Delay(frameDelay - frameStart);
         }

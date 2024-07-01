@@ -5,10 +5,10 @@
 Player::Player(int posx, int posy, int width, int height, int maxHealth, int attackDamage, Window *window) : Entity(posx, posy, width, height, maxHealth, attackDamage)
 {
     entityTextures Texture;
-    Texture.move[0] = (*window).loadTexture("res/entity/lizard/move1.png");
-    Texture.move[1] = (*window).loadTexture("res/entity/lizard/move2.png");
-    Texture.attack = (*window).loadTexture("res/entity/lizard/attack.png");
-    Texture.damage = (*window).loadTexture("res/entity/lizard/move1.png");
+    Texture.move[0] = (*window).loadTexture((char *)"res/entity/lizard/move1.png");
+    Texture.move[1] = (*window).loadTexture((char *)"res/entity/lizard/move2.png");
+    Texture.attack = (*window).loadTexture((char *)"res/entity/lizard/attack.png");
+    Texture.damage = (*window).loadTexture((char *)"res/entity/lizard/move1.png");
     setTexture(Texture);
 }
 
@@ -51,13 +51,14 @@ SDL_Texture *Player::getPTexture()
         }
         setAngle(angle);
     }
-    if (moving && (sqrt((mouseX - x()) * (mouseX - x()) + (mouseX - x()) * (mouseX - x())) > 3))
+    if (moving && (sqrt((mouseX - x()) * (mouseX - x()) + (mouseX - x()) * (mouseX - x())) > 5))
     {
         setVel(std::cos(angle() * M_PI / 180.0) * (7), std::sin(angle() * M_PI / 180.0) * (7));
     }
     else
     {
         setVel(0, 0);
+        moving = false;
     }
     move();
     return getTexture();

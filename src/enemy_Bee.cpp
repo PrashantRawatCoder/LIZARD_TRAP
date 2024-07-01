@@ -6,10 +6,10 @@
 Enemy_Bee::Enemy_Bee(int posx, int posy, int width, int height, int maxHealth, int attackDamage, Window *window) : Entity(posx, posy, width, height, maxHealth, attackDamage)
 {
     entityTextures Texture;
-    Texture.move[0] = (*window).loadTexture("res/entity/bee/move1.png");
-    Texture.move[1] = (*window).loadTexture("res/entity/bee/move1.png");
-    Texture.attack = (*window).loadTexture("res/entity/bee/move1.png");
-    Texture.damage = (*window).loadTexture("res/entity/bee/move1.png");
+    Texture.move[0] = (*window).loadTexture((char *)"res/entity/bee/move1.png");
+    Texture.move[1] = (*window).loadTexture((char *)"res/entity/bee/move1.png");
+    Texture.attack = (*window).loadTexture((char *)"res/entity/bee/move1.png");
+    Texture.damage = (*window).loadTexture((char *)"res/entity/bee/move1.png");
     setTexture(Texture);
 }
 
