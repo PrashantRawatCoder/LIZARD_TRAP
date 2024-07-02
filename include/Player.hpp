@@ -4,12 +4,15 @@
 
 class Player : public Entity
 {
-    private:
+private:
     int mouseX;
     int mouseY;
-    bool moving=false;
+    int centerX, centerY;
+    bool moving = false;
+
 public:
-    Player(int posx, int posy, int width, int height, int maxHealth, int attackDamage, Window *window);
+    Player(int width, int height, int maxHealth, int attackDamage, Window *window);
     void Events(SDL_Event event);
     SDL_Texture *getPTexture();
+    SDL_Rect getRect();
 };

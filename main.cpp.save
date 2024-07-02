@@ -30,9 +30,9 @@ int main(int argc, char *argv[])
 
     SDL_Event event;
     Window window((char *)title, windowWidth, windowHeight);
-    Map myMap(&window, (char *)"res/map/");
-    Player player = Player(120, 60, 10, 2, &window);
-    std::cout << "Game Started !!\n";
+    Map myMap(&window,(char *) "res/map/");
+    Player player = Player(100, 100, 120, 60, 10, 2, &window);
+    std::cout<<"Game Started !!\n";
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -52,13 +52,13 @@ int main(int argc, char *argv[])
             player.Events(event);
         }
         window.clear();
-        myMap.renderMap(player.x() - player.getWidth() / 2, player.y() - player.getHeight() / 2);
+        myMap.renderMap(0, 0);
         window.render(player.getPTexture(), player.getRect(), player.angle());
         window.display();
 
         // Adjusting constant FPS
         frameStart = SDL_GetTicks() - frameStart;
-        if (frameStart < (unsigned)frameDelay)
+        (unsigned)frameStart < frameDelay)
         {
             SDL_Delay(frameDelay - frameStart);
         }
