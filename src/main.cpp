@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 
     SDL_Event event;
     Window window((char *)title, windowWidth, windowHeight);
-    Map myMap(&window, (char *)"res/map/");
+    Map myMap(&window, (char *)"res/map/", 120);
     Player player = Player(120, 60, 10, 2, &window);
     std::cout << "Game Started !!\n";
     while (running)
