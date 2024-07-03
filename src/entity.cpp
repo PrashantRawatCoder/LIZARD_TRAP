@@ -1,10 +1,10 @@
 #include "Entity.hpp"
 
-Entity::Entity(int posx, int posy, int width, int height, int maxHealth, int attackDamage) : posX(posx), posY(posy), width(width), height(height), maxHealth(maxHealth), health(maxHealth), attackDamage(attackDamage)
+Entity::Entity(int posx, int posy, float speed, int width, int height, int maxHealth, int attackDamage) : posX(posx), posY(posy), speed(speed), width(width), height(height), maxHealth(maxHealth), health(maxHealth), attackDamage(attackDamage)
 {
 }
 
-Entity::Entity(int posx, int posy, int width, int height, int maxHealth, int attackDamage, entityTextures Texture) : posX(posx), posY(posy), width(width), height(height), maxHealth(maxHealth), health(maxHealth), attackDamage(attackDamage), texture(Texture)
+Entity::Entity(int posx, int posy, float speed, int width, int height, int maxHealth, int attackDamage, entityTextures Texture) : posX(posx), posY(posy), speed(speed), width(width), height(height), maxHealth(maxHealth), health(maxHealth), attackDamage(attackDamage), texture(Texture)
 {
 }
 
@@ -34,6 +34,12 @@ void Entity::setVel(int velx, int vely)
     velocityY = vely;
 }
 
+void Entity::setVel(double time)
+{
+    velocityX = std::cos(angle() * M_PI / 180.0) * (time * getSpeed());
+    velocityY = std::sin(angle() * M_PI / 180.0) * (time * getSpeed());
+}
+
 double Entity::angle()
 {
     return rotationAngle;
@@ -42,6 +48,11 @@ double Entity::angle()
 void Entity::setAngle(double angle)
 {
     rotationAngle = angle;
+}
+
+float Entity::getSpeed()
+{
+    return speed;
 }
 
 int Entity::getWidth()
@@ -114,8 +125,8 @@ void Entity::heal(int addHealth)
         health = maxHealth;
 }
 
-SDL_Rect Entity::getRect()
+SDL_Rect Entity::getRect(int playerPOV_X, int playerPOV_Y)
 {
-    SDL_Rect rect{posX, posY, width, height};
+    SDL_Rect rect{posX + playerPOV_X, posY + playerPOV_Y, width, height};
     return rect;
 }

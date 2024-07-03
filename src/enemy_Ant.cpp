@@ -3,7 +3,7 @@
 #include "Enemy_Ant.hpp"
 #include "Window.hpp"
 
-Enemy_Ant::Enemy_Ant(int posx, int posy, int width, int height, int maxHealth, int attackDamage, Window *window) : Entity(posx, posy, width, height, maxHealth, attackDamage)
+Enemy_Ant::Enemy_Ant(int posx, int posy, int width, int height, int maxHealth, int attackDamage, Window *window) : Entity(posx, posy, 3.0f, width, height, maxHealth, attackDamage)
 {
     entityTextures Texture;
     Texture.move[0] = (*window).loadTexture((char *)"res/entity/ant/move1.png");
@@ -15,7 +15,8 @@ Enemy_Ant::Enemy_Ant(int posx, int posy, int width, int height, int maxHealth, i
 
 SDL_Texture *Enemy_Ant::getPTexture()
 {
-    setVel(rand() % 13 - 6, rand() % 13 - 6);
+    setAngle(angle() + rand() % 11 - 5);
+    setVel();
     move();
     return getTexture();
 }

@@ -2,7 +2,7 @@
 #include "Window.hpp"
 #include <cmath>
 
-Player::Player(int width, int height, int maxHealth, int attackDamage, Window *window) : Entity(window->Width() / 2 - width / 2, window->Height() / 2 - height / 2, width, height, maxHealth, attackDamage), centerX(window->Width() / 2 - getWidth() / 2), centerY(window->Height() / 2 - getHeight() / 2)
+Player::Player(int width, int height, float speed, int maxHealth, int attackDamage, Window *window) : Entity(window->Width() / 2 - width / 2, window->Height() / 2 - height / 2, speed, width, height, maxHealth, attackDamage), centerX(window->Width() / 2 - getWidth() / 2), centerY(window->Height() / 2 - getHeight() / 2)
 {
     entityTextures Texture;
     Texture.move[0] = (*window).loadTexture((char *)"res/entity/lizard/move1.png");
@@ -37,12 +37,15 @@ void Player::Events(SDL_Event event)
     }
 }
 
+void Player::setFPSTime(double time)
+{
+    FPSTime = time;
+}
+
 SDL_Texture *Player::getPTexture()
 {
     {
-        float dx = mouseX - centerX;
-        float dy = mouseY - centerY;
-        float angle_rad = std::atan2(dy, dx);
+        float angle_rad = std::atan2(mouseY - centerY, mouseX - centerX);
         double angle = angle_rad * 180.0f / M_PI;
         angle -= 5.0000001f;
         if (angle < 0)
@@ -53,7 +56,7 @@ SDL_Texture *Player::getPTexture()
     }
     if (moving && (sqrt((mouseX - centerX) * (mouseX - centerX) + (mouseY - centerY) * (mouseY - centerY)) > 1))
     {
-        setVel(std::cos(angle() * M_PI / 180.0) * (7), std::sin(angle() * M_PI / 180.0) * (7));
+        setVel(FPSTime);
     }
     else
     {

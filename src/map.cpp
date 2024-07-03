@@ -22,14 +22,6 @@ void Map::renderMap(int x, int y)
     int tilex = 0, tiley = 0;
     int WindowHalfWidth = window->Width() / 2, WindowHalfHeight = window->Height() / 2;
     window->render(sky);
-    // for (int tileY = ((y - window->Height() / 2 - 119) / 120) * 120; tileY < (y + window->Height() / 2); tileY += tileSize)
-    // {
-    //     for (int tileX = ((x - window->Width() / 2 - 119) / 120) * 120; tileX < (x + window->Width() / 2); tileX += tileSize)
-    //     {
-
-    //     }
-    // }
-
     do
     {
         switch (arr[currentTile])

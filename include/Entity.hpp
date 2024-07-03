@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <cmath>
 
 typedef struct entityTextures
 {
@@ -14,9 +15,10 @@ class Entity
 {
 private:
     int posX, posY;
+    float speed;
     int width, height;
     int velocityX = 0, velocityY = 0;
-    int MouseX=0,MouseY=0;
+    int MouseX = 0, MouseY = 0;
     double rotationAngle = 0;
     int maxHealth;
     int health;
@@ -28,8 +30,8 @@ private:
     int currentMoveTexture = 0;
 
 public:
-    Entity(int posX, int posY, int width, int height, int maxHealth, int attackDamage);
-    Entity(int posX, int posY, int width, int height, int maxHealth, int attackDamage, entityTextures Texture);
+    Entity(int posX, int posY, float speed, int width, int height, int maxHealth, int attackDamage);
+    Entity(int posX, int posY, float speed, int width, int height, int maxHealth, int attackDamage, entityTextures Texture);
     int x();
     int y();
     int velX();
@@ -37,14 +39,16 @@ public:
     double angle();
     int getWidth();
     int getHeight();
+    float getSpeed();
     int attack();
     SDL_Texture *getTexture();
 
     void setVel(int velx, int vely);
+    void setVel(double time=1);
     void setAngle(double angle);
     void move();
     void setTexture(entityTextures Texture);
     int getDamage(int attack);
     void heal(int addHealth);
-    SDL_Rect getRect();
+    SDL_Rect getRect(int playerPOV_X,int playerPOV_Y);
 };
