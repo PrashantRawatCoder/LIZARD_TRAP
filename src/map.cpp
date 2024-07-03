@@ -17,48 +17,22 @@ Map::Map(Window *window, char *filename, int tileSize) : window(window), tileSiz
 
 void Map::renderMap(int x, int y)
 {
-    int currentTile = 0, xIndex = 0, yIndex = 0;
+    int currentTile = 0;
     int WindowHalfWidth = window->Width() / 2, WindowHalfHeight = window->Height() / 2;
     window->render(sky);
 
-    for (int tiley = (y + 1 - WindowHalfHeight - tileSize); tiley < (y + WindowHalfHeight); tiley += tileSize)
+    for (int tiley = (y - WindowHalfHeight) / tileSize; tiley < 1 + (y + WindowHalfHeight) / tileSize; tiley += 1)
     {
-        for (int tilex = (x + 1 - WindowHalfWidth - tileSize); tilex < (x + WindowHalfWidth); tilex += tileSize)
+        for (int tilex = (x - WindowHalfWidth) / tileSize; tilex < 1 + (x + WindowHalfWidth) / tileSize; tilex += 1)
         {
-            yIndex = tiley / tileSize;
-            xIndex = tilex / tileSize;
-            if (0 < yIndex && yIndex < mapHeight && 0 < xIndex && xIndex < mapWidth)
+            if (0 < tiley && tiley < mapHeight && 0 < tilex && tilex < mapWidth)
             {
-                currentTile = arr[yIndex][xIndex];
+                currentTile = arr[tiley][tilex];
                 if (currentTile != 0)
                 {
-                    window->render(textures[currentTile], SDL_Rect{tilex + WindowHalfWidth - x, tiley + WindowHalfHeight - y, tileSize, tileSize});
+                    window->render(textures[currentTile], SDL_Rect{tilex * tileSize + WindowHalfWidth - x, tiley * tileSize + WindowHalfHeight - y, tileSize, tileSize});
                 }
             }
         }
     }
-
-    /*
-        do
-        {
-            switch (arr[currentTile])
-            {
-            case 9:
-                tiley += tileSize;
-                tilex = -tileSize;
-                break;
-            case 0:
-                break;
-            default:
-                if ((tilex > (x + 1 - WindowHalfWidth - tileSize)) && (tilex < (x + WindowHalfWidth)) && (tiley > (y + 1 - WindowHalfHeight - tileSize)) && (tiley < (y + WindowHalfHeight)))
-                {
-                    window->render(textures[arr[currentTile]], SDL_Rect{tilex + WindowHalfWidth - x, tiley + WindowHalfHeight - y, tileSize, tileSize});
-                }
-                itr++;
-                break;
-            }
-            currentTile++;
-            tilex += tileSize;
-        } while (arr[currentTile] != 100);
-        */
 }
