@@ -44,11 +44,11 @@ public:
     SDL_Texture *getTexture();
 
     void setVel(int velx, int vely);
-    void setVel(double time=1);
+    void setVel(double time = 1);
     void setAngle(double angle);
     void move();
     void setTexture(entityTextures Texture);
     int getDamage(int attack);
     void heal(int addHealth);
-    SDL_Rect getRect(int playerPOV_X,int playerPOV_Y);
+    SDL_Rect getRect(int playerPOV_X, int playerPOV_Y);
 };
