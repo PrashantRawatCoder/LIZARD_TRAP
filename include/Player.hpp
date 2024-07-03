@@ -15,6 +15,6 @@ public:
     Player(int width, int height, float speed, int maxHealth, int attackDamage, Window *window);
     void Events(SDL_Event event);
     SDL_Texture *getPTexture();
-    SDL_Rect getRect();
+    SDL_Rect getDrawRect();
     void setFPSTime(double time);
 };

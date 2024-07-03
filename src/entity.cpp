@@ -125,8 +125,17 @@ void Entity::heal(int addHealth)
         health = maxHealth;
 }
 
-SDL_Rect Entity::getRect(int playerPOV_X, int playerPOV_Y)
+SDL_Rect Entity::getDrawRect(int playerPOV_X, int playerPOV_Y)
 {
     SDL_Rect rect{posX + playerPOV_X, posY + playerPOV_Y, width, height};
     return rect;
+}
+
+SDL_Rect Entity::getRect()
+{
+    if (height > width)
+    {
+        return SDL_Rect{posX, posY, height, height};
+    }
+    return SDL_Rect{posX, posY, width, width};
 }

@@ -2,7 +2,7 @@
 #include "Window.hpp"
 #include <cmath>
 
-Player::Player(int width, int height, float speed, int maxHealth, int attackDamage, Window *window) : Entity(window->Width() / 2 - width / 2, window->Height() / 2 - height / 2, speed, width, height, maxHealth, attackDamage), centerX(window->Width() / 2 - getWidth() / 2), centerY(window->Height() / 2 - getHeight() / 2)
+Player::Player(int width, int height, float speed, int maxHealth, int attackDamage, Window *window) : Entity(window->Width() / 2 - width / 2, window->Height() / 2 - height / 2, speed, width, height, maxHealth, attackDamage), centerX(window->Width() / 2), centerY(window->Height() / 2)
 {
     entityTextures Texture;
     Texture.move[0] = (*window).loadTexture((char *)"res/entity/lizard/move1.png");
@@ -67,9 +67,8 @@ SDL_Texture *Player::getPTexture()
     return getTexture();
 }
 
-SDL_Rect Player::getRect()
+SDL_Rect Player::getDrawRect()
 {
-
     SDL_Rect rect{centerX, centerY, getWidth(), getHeight()};
     return rect;
 }

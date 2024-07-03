@@ -13,7 +13,7 @@ private:
     Window *window;
     SDL_Texture *sky;
     int tileSize, mapWidth = 30, mapHeight = 20;
-
+    std::unordered_map<int, SDL_Texture *> textures;
     int arr[20][30] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                        {0, 41, 71, 71, 71, 71, 71, 42, 0, 0, 0, 0, 0, 0, 0, 41, 71, 71, 71, 71, 71, 42, 0, 0, 0, 0, 0, 0, 0, 0},
                        {0, 74, 1, 1, 1, 1, 1, 72, 0, 0, 0, 0, 0, 0, 0, 74, 1, 1, 1, 1, 1, 72, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -35,10 +35,9 @@ private:
                        {0, 44, 73, 73, 73, 73, 73, 43, 0, 0, 0, 0, 0, 0, 0, 44, 73, 73, 73, 73, 73, 43, 0, 0, 0, 0, 0, 0, 0, 0},
                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100}};
 
-    std::unordered_map<int, SDL_Texture *> textures;
 
 public:
     Map(Window *window, char *filename, int tileSize = 120);
     void renderMap(int x, int y);
-    bool isCollidingWall(SDL_Rect collider);
+    bool isCollidingWall(SDL_Rect collider,SDL_Rect *result);
 };

@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <vector>
@@ -31,14 +32,14 @@ void renderGame(Window *window, Map *gameMap, Player *player, std::vector<Enemy_
         playerFOV_Y = window->Height() / 2 - playerY;
     gameMap->renderMap(playerX, playerY);
 
-    window->render(player->getPTexture(), player->getRect(), player->angle());
+    window->render(player->getPTexture(), player->getDrawRect(), player->angle());
     for (Enemy_Ant *ant : *Ants)
     {
-        window->render(ant->getPTexture(), ant->getRect(playerFOV_X, playerFOV_Y), ant->angle());
+        window->render(ant->getPTexture(), ant->getDrawRect(playerFOV_X, playerFOV_Y), ant->angle());
     }
     for (Enemy_Bee *bee : *Bees)
     {
-        window->render(bee->getPTexture(), bee->getRect(playerFOV_X, playerFOV_Y), bee->angle());
+        window->render(bee->getPTexture(), bee->getDrawRect(playerFOV_X, playerFOV_Y), bee->angle());
     }
 }
 
@@ -88,14 +89,18 @@ int main(int argc, char *argv[])
         }
         window.clear();
         renderGame(&window, &gameMap, &player, &Bees, &Ants);
-        window.display();
-        if (gameMap.isCollidingWall(player.Entity::getRect()))
+        SDL_Rect result;
+
+        SDL_SetRenderDrawColor(window.renderer, 150, 59, 200, 235);
+        if (gameMap.isCollidingWall(player.Entity::getRect(), &result))
         {
-            std::cout << "player collided\n";
+            std::cout << "p ";
         }
+        window.display();
         frameStart = SDL_GetTicks() - frameStart;
         // std::cout << "FPS : " << 1000.0 / frameStart << "\n";
         player.setFPSTime(frameStart / 1000.0);
+
         // Adjusting constant FPS if over 60 FPS
         if (frameStart < (unsigned)frameDelay)
         {

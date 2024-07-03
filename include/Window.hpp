@@ -5,10 +5,10 @@ class Window
 {
 private:
     SDL_Window *window;
-    SDL_Renderer *renderer;
     int width, height;
 
 public:
+    SDL_Renderer *renderer;
     Window(char *title, int width, int height);
     ~Window();
     void clear();
