@@ -40,4 +40,5 @@ private:
 public:
     Map(Window *window, char *filename, int tileSize = 120);
     void renderMap(int x, int y);
+    bool isCollidingWall(SDL_Rect collider);
 };

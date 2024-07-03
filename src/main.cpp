@@ -89,9 +89,12 @@ int main(int argc, char *argv[])
         window.clear();
         renderGame(&window, &gameMap, &player, &Bees, &Ants);
         window.display();
-
+        if (gameMap.isCollidingWall(player.Entity::getRect()))
+        {
+            std::cout << "player collided\n";
+        }
         frameStart = SDL_GetTicks() - frameStart;
-        std::cout << "FPS : " << 1000.0 / frameStart << "\n";
+        // std::cout << "FPS : " << 1000.0 / frameStart << "\n";
         player.setFPSTime(frameStart / 1000.0);
         // Adjusting constant FPS if over 60 FPS
         if (frameStart < (unsigned)frameDelay)

@@ -36,3 +36,27 @@ void Map::renderMap(int x, int y)
         }
     }
 }
+
+bool Map::isCollidingWall(SDL_Rect collider)
+{
+    int currentTile = 0;
+    for (int tiley = (collider.y) / tileSize - 1; tiley < 2 + (collider.y + collider.h) / tileSize; tiley += 1)
+    {
+        for (int tilex = (collider.x) / tileSize - 1; tilex < 2 + (collider.x + collider.w) / tileSize; tilex += 1)
+        {
+            if (0 < tiley && tiley < mapHeight && 0 < tilex && tilex < mapWidth)
+            {
+                currentTile = arr[tiley][tilex];
+                if (currentTile != 0 && currentTile != 1)
+                {
+                    if (((collider.w + collider.x) >= (tilex * tileSize) && (collider.x) <= ((tilex + 1) * tileSize)) && ((collider.h + collider.y) >= (tiley * tileSize) && (collider.y) <= ((tiley + 1) * tileSize)))
+                    {
+                        return true;
+                    }
+                    // window->render(textures[currentTile], SDL_Rect{tilex * tileSize + WindowHalfWidth - x, tiley * tileSize + WindowHalfHeight - y, tileSize, tileSize});
+                }
+            }
+        }
+    }
+    return false;
+}

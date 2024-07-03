@@ -50,5 +50,5 @@ public:
     void setTexture(entityTextures Texture);
     int getDamage(int attack);
     void heal(int addHealth);
-    SDL_Rect getRect(int playerPOV_X, int playerPOV_Y);
+    SDL_Rect getRect(int playerPOV_X=0, int playerPOV_Y=0);
 };
