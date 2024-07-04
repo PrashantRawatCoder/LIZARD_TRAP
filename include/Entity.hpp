@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <cmath>
+#include "Map.hpp"
 
 typedef struct entityTextures
 {
@@ -28,10 +29,11 @@ private:
     bool damaging = false;
     bool attacking = false;
     int currentMoveTexture = 0;
+    Map *map;
 
 public:
-    Entity(int posX, int posY, float speed, int width, int height, int maxHealth, int attackDamage);
-    Entity(int posX, int posY, float speed, int width, int height, int maxHealth, int attackDamage, entityTextures Texture);
+    Entity(int posX, int posY, float speed, int width, int height, int maxHealth, int attackDamage,Map *map);
+    Entity(int posX, int posY, float speed, int width, int height, int maxHealth, int attackDamage, entityTextures Texture,Map *map);
     int x();
     int y();
     int velX();

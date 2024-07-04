@@ -1,14 +1,15 @@
 #pragma once
-#include "Entity.hpp"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 class Window
 {
 private:
     SDL_Window *window;
+    SDL_Renderer *renderer;
     int width, height;
 
 public:
-    SDL_Renderer *renderer;
     Window(char *title, int width, int height);
     ~Window();
     void clear();

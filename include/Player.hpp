@@ -1,6 +1,8 @@
 #pragma once
 #include "Entity.hpp"
 #include "Window.hpp"
+#include "Map.hpp"
+
 
 class Player : public Entity
 {
@@ -12,7 +14,7 @@ private:
     bool moving = false;
 
 public:
-    Player(int width, int height, float speed, int maxHealth, int attackDamage, Window *window);
+    Player(int width, int height, float speed, int maxHealth, int attackDamage, Window *window,Map *map);
     void Events(SDL_Event event);
     SDL_Texture *getPTexture();
     SDL_Rect getDrawRect();

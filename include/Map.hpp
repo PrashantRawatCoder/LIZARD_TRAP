@@ -3,7 +3,6 @@
 #include <unordered_map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "Entity.hpp"
 #include "Window.hpp"
 
 class Map
@@ -35,9 +34,8 @@ private:
                        {0, 44, 73, 73, 73, 73, 73, 43, 0, 0, 0, 0, 0, 0, 0, 44, 73, 73, 73, 73, 73, 43, 0, 0, 0, 0, 0, 0, 0, 0},
                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100}};
 
-
 public:
     Map(Window *window, char *filename, int tileSize = 120);
     void renderMap(int x, int y);
-    bool isCollidingWall(SDL_Rect collider,SDL_Rect *result);
+    bool isCollidingWall(SDL_Rect collider, SDL_Rect *result);
 };

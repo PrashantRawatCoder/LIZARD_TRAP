@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <vector>
@@ -24,6 +23,20 @@ void init()
         std::cout << "SDL Image Initilisation Failed !!\nERROR : " << SDL_GetError() << "\n";
 }
 
+bool inPlayerPOV(SDL_Rect player, SDL_Rect rect)
+{
+    // Checking about y axis
+    if (((rect.y + rect.h) > (player.y - windowHeight / 2)) && ((rect.y - 1) < (player.y + windowHeight / 2)))
+    {
+        // cheacking about x axis
+        if (((rect.x + rect.w) > (player.x - windowWidth / 2)) && ((rect.x - 1) < (player.x + windowWidth / 2)))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void renderGame(Window *window, Map *gameMap, Player *player, std::vector<Enemy_Bee *> *Bees, std::vector<Enemy_Ant *> *Ants)
 {
     int playerX = player->x() - player->getWidth() / 2,
@@ -35,11 +48,17 @@ void renderGame(Window *window, Map *gameMap, Player *player, std::vector<Enemy_
     window->render(player->getPTexture(), player->getDrawRect(), player->angle());
     for (Enemy_Ant *ant : *Ants)
     {
-        window->render(ant->getPTexture(), ant->getDrawRect(playerFOV_X, playerFOV_Y), ant->angle());
+        if (inPlayerPOV(player->getRect(), ant->getRect()))
+        {
+            window->render(ant->getPTexture(), ant->getDrawRect(playerFOV_X, playerFOV_Y), ant->angle());
+        }
     }
     for (Enemy_Bee *bee : *Bees)
     {
-        window->render(bee->getPTexture(), bee->getDrawRect(playerFOV_X, playerFOV_Y), bee->angle());
+        if (inPlayerPOV(player->getRect(), bee->getRect()))
+        {
+            window->render(bee->getPTexture(), bee->getDrawRect(playerFOV_X, playerFOV_Y), bee->angle());
+        }
     }
 }
 
@@ -51,16 +70,16 @@ int main(int argc, char *argv[])
     SDL_Event event;
     Window window((char *)title, windowWidth, windowHeight);
     Map gameMap(&window, (char *)"res/map/", 120);
-    Player player(120, 60, 300.0f, 10, 2, &window);
+    Player player(120, 60, 300.0f, 10, 2, &window, &gameMap);
     std::vector<Enemy_Bee *> Bees;
     std::vector<Enemy_Ant *> Ants;
     {
-        Bees.push_back(new Enemy_Bee(1000, 600, 64, 64, 10, 2, &window));
-        Bees.push_back(new Enemy_Bee(1700, 900, 64, 64, 10, 2, &window));
-        Bees.push_back(new Enemy_Bee(700, 900, 64, 64, 10, 2, &window));
-        Ants.push_back(new Enemy_Ant(1000, 600, 64, 64, 10, 2, &window));
-        Ants.push_back(new Enemy_Ant(1700, 900, 64, 64, 10, 2, &window));
-        Ants.push_back(new Enemy_Ant(700, 900, 64, 64, 10, 2, &window));
+        Bees.push_back(new Enemy_Bee(1000, 600, 64, 64, 10, 2, &window, &gameMap));
+        Bees.push_back(new Enemy_Bee(1700, 900, 64, 64, 10, 2, &window, &gameMap));
+        Bees.push_back(new Enemy_Bee(700, 900, 64, 64, 10, 2, &window, &gameMap));
+        Ants.push_back(new Enemy_Ant(1000, 600, 64, 64, 10, 2, &window, &gameMap));
+        Ants.push_back(new Enemy_Ant(1700, 900, 64, 64, 10, 2, &window, &gameMap));
+        Ants.push_back(new Enemy_Ant(700, 900, 64, 64, 10, 2, &window, &gameMap));
     }
     std::cout << "Game Started !!\n";
     while (running)
@@ -89,13 +108,6 @@ int main(int argc, char *argv[])
         }
         window.clear();
         renderGame(&window, &gameMap, &player, &Bees, &Ants);
-        SDL_Rect result;
-
-        SDL_SetRenderDrawColor(window.renderer, 150, 59, 200, 235);
-        if (gameMap.isCollidingWall(player.Entity::getRect(), &result))
-        {
-            std::cout << "p ";
-        }
         window.display();
         frameStart = SDL_GetTicks() - frameStart;
         // std::cout << "FPS : " << 1000.0 / frameStart << "\n";

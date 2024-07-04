@@ -1,9 +1,8 @@
 #include <cstdlib>
 #include <time.h>
 #include "Enemy_Bee.hpp"
-#include "Window.hpp"
 
-Enemy_Bee::Enemy_Bee(int posx, int posy, int width, int height, int maxHealth, int attackDamage, Window *window) : Entity(posx, posy, 1.5f, width, height, maxHealth, attackDamage)
+Enemy_Bee::Enemy_Bee(int posx, int posy, int width, int height, int maxHealth, int attackDamage, Window *window, Map *map) : Entity(posx, posy, 1.5f, width, height, maxHealth, attackDamage, map)
 {
     entityTextures Texture;
     Texture.move[0] = (*window).loadTexture((char *)"res/entity/bee/move1.png");
@@ -15,7 +14,7 @@ Enemy_Bee::Enemy_Bee(int posx, int posy, int width, int height, int maxHealth, i
 
 SDL_Texture *Enemy_Bee::getPTexture()
 {
-    setAngle(angle() + rand() % 11 - 5);
+    setAngle((angle() + rand() % 31) - 15);
     setVel();
     move();
     move();

@@ -1,10 +1,10 @@
 #include "Entity.hpp"
 
-Entity::Entity(int posx, int posy, float speed, int width, int height, int maxHealth, int attackDamage) : posX(posx), posY(posy), speed(speed), width(width), height(height), maxHealth(maxHealth), health(maxHealth), attackDamage(attackDamage)
+Entity::Entity(int posx, int posy, float speed, int width, int height, int maxHealth, int attackDamage, Map *map) : posX(posx), posY(posy), speed(speed), width(width), height(height), maxHealth(maxHealth), health(maxHealth), attackDamage(attackDamage), map(map)
 {
 }
 
-Entity::Entity(int posx, int posy, float speed, int width, int height, int maxHealth, int attackDamage, entityTextures Texture) : posX(posx), posY(posy), speed(speed), width(width), height(height), maxHealth(maxHealth), health(maxHealth), attackDamage(attackDamage), texture(Texture)
+Entity::Entity(int posx, int posy, float speed, int width, int height, int maxHealth, int attackDamage, entityTextures Texture, Map *map) : posX(posx), posY(posy), speed(speed), width(width), height(height), maxHealth(maxHealth), health(maxHealth), attackDamage(attackDamage), texture(Texture), map(map)
 {
 }
 
@@ -108,6 +108,62 @@ void Entity::move()
 {
     posX += velocityX;
     posY += velocityY;
+    SDL_Rect collisionRect{0, 0, 0, 0};
+    if (map->isCollidingWall(getRect(), &collisionRect))
+    {
+        posX -= velocityX;
+        posY -= velocityY;
+        // if (posX == collisionRect.x)
+        // {
+        //     if (posY == collisionRect.y)
+        //     {
+        //         if (collisionRect.w > collisionRect.h)
+        //         {
+        //             posY += collisionRect.h;
+        //         }
+        //         else
+        //         {
+        //             posX += collisionRect.w;
+        //         }
+        //     }
+        //     if (posY < collisionRect.y)
+        //     {
+        //         if (collisionRect.h > collisionRect.w)
+        //         {
+        //             posX += collisionRect.w;
+        //         }
+        //         else
+        //         {
+        //             posY -= collisionRect.h;
+        //         }
+        //     }
+        // }
+        // if (posX < collisionRect.x)
+        // {
+        //     if (posY == collisionRect.y)
+        //     {
+        //         if (collisionRect.h > collisionRect.w)
+        //         {
+        //             posX -= collisionRect.w;
+        //         }
+        //         else
+        //         {
+        //             posY += collisionRect.h;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         if (collisionRect.h > collisionRect.w)
+        //         {
+        //             posX -= collisionRect.w;
+        //         }
+        //         else
+        //         {
+        //             posY -= collisionRect.h;
+        //         }
+        //     }
+        // }
+    }
 }
 int Entity::getDamage(int attack)
 {
@@ -135,7 +191,7 @@ SDL_Rect Entity::getRect()
 {
     if (height > width)
     {
-        return SDL_Rect{posX, posY, height, height};
+        return SDL_Rect{posX - (height - width) / 2, posY, height, height};
     }
-    return SDL_Rect{posX, posY, width, width};
+    return SDL_Rect{posX, posY - (width - height) / 2, width, width};
 }

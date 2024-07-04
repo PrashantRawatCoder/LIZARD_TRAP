@@ -25,12 +25,12 @@ Window::~Window()
 
 int Window::Width()
 {
-    return width;
+    return width - 300;
 }
 
 int Window::Height()
 {
-    return height;
+    return height - 300;
 }
 
 void Window::display()

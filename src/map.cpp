@@ -39,15 +39,14 @@ void Map::renderMap(int x, int y)
 
 bool Map::isCollidingWall(SDL_Rect collider, SDL_Rect *result)
 {
-    SDL_Rect wall, walldraw, PlayerRect{window->Width() / 2, window->Height() / 2, collider.w, collider.h};
+    SDL_Rect wall;
 
-    for (int tiley = (collider.y) / tileSize - 2; tiley < 2 + (collider.y + collider.h) / tileSize; tiley += 1)
+    for (int tiley = (collider.y) / tileSize; tiley < 1 + (collider.y + collider.h) / tileSize; tiley += 1)
     {
-        for (int tilex = (collider.x) / tileSize - 4; tilex < 4 + (collider.x + collider.w) / tileSize; tilex += 1)
+        for (int tilex = (collider.x) / tileSize; tilex < 1 + (collider.x + collider.w) / tileSize; tilex += 1)
         {
             if (0 < tiley && tiley < mapHeight && 0 < tilex && tilex < mapWidth)
             {
-                SDL_RenderDrawRect(window->renderer, &PlayerRect);
                 switch (arr[tiley][tilex])
                 {
                 case 0:
@@ -56,12 +55,6 @@ bool Map::isCollidingWall(SDL_Rect collider, SDL_Rect *result)
                     break;
                 case 71:
                     wall = SDL_Rect{tilex * tileSize, tiley * tileSize, tileSize, (int)(tileSize * 0.25f)};
-
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
-
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
@@ -69,11 +62,6 @@ bool Map::isCollidingWall(SDL_Rect collider, SDL_Rect *result)
                     break;
                 case 72:
                     wall = SDL_Rect{(int)(tilex * tileSize + tileSize * 0.75f), tiley * tileSize, (int)(tileSize * 0.25f), tileSize};
-
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
 
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
@@ -83,11 +71,6 @@ bool Map::isCollidingWall(SDL_Rect collider, SDL_Rect *result)
                 case 73:
                     wall = SDL_Rect{tilex * tileSize, (int)(tiley * tileSize + tileSize * 0.75f), tileSize, (int)(tileSize * 0.25f)};
 
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
-
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
@@ -95,10 +78,7 @@ bool Map::isCollidingWall(SDL_Rect collider, SDL_Rect *result)
                     break;
                 case 74:
                     wall = SDL_Rect{tilex * tileSize, tiley * tileSize, (int)(tileSize * 0.25f), tileSize};
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
+
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
@@ -106,19 +86,13 @@ bool Map::isCollidingWall(SDL_Rect collider, SDL_Rect *result)
                     break;
                 case 41:
                     wall = SDL_Rect{tilex * tileSize, tiley * tileSize, (int)(tileSize * 0.25f), tileSize};
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
+
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
                     }
                     wall = SDL_Rect{tilex * tileSize, tiley * tileSize, tileSize, (int)(tileSize * 0.25f)};
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
+
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
@@ -127,19 +101,13 @@ bool Map::isCollidingWall(SDL_Rect collider, SDL_Rect *result)
 
                 case 42:
                     wall = SDL_Rect{tilex * tileSize, tiley * tileSize, tileSize, (int)(tileSize * 0.25f)};
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
+
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
                     }
                     wall = SDL_Rect{(int)(tilex * tileSize + tileSize * 0.75f), tiley * tileSize, (int)(tileSize * 0.25f), tileSize};
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
+
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
@@ -147,20 +115,14 @@ bool Map::isCollidingWall(SDL_Rect collider, SDL_Rect *result)
                     break;
                 case 43:
                     wall = SDL_Rect{(int)(tilex * tileSize + tileSize * 0.75f), tiley * tileSize, (int)(tileSize * 0.25f), tileSize};
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
+
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
                     }
 
                     wall = SDL_Rect{tilex * tileSize, (int)(tiley * tileSize + tileSize * 0.75f), tileSize, (int)(tileSize * 0.25f)};
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
+
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
@@ -168,20 +130,12 @@ bool Map::isCollidingWall(SDL_Rect collider, SDL_Rect *result)
                     break;
                 case 44:
                     wall = SDL_Rect{tilex * tileSize, tiley * tileSize, (int)(tileSize * 0.25f), tileSize};
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
+
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
                         return true;
                     }
                     wall = SDL_Rect{tilex * tileSize, (int)(tiley * tileSize + tileSize * 0.75f), tileSize, (int)(tileSize * 0.25f)};
-
-                    walldraw = wall;
-                    walldraw.x = walldraw.x - collider.x + 300;
-                    walldraw.y = walldraw.y - collider.y + 300;
-                    SDL_RenderDrawRect(window->renderer, &walldraw);
 
                     if (SDL_IntersectRect(&collider, &wall, result) == SDL_TRUE)
                     {
